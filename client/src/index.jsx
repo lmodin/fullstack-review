@@ -7,16 +7,49 @@ import RepoList from './components/RepoList.jsx';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       repos: []
     }
 
   }
 
+  componentDidMount() {
+    //fetch top 25 repos
+    this.updateRepos();
+  }
+
+  updateRepos() {
+    fetch("http://localhost:1128/repos")
+    .then(res => res.json())
+    .then((repos) => {
+      console.log(repos)
+      this.setState({
+        repos: repos
+      });
+      console.log(this.state.repos)
+    })
+    .catch(err => console.log(err))
+
+  }
+
   search (term) {
     console.log(`${term} was searched`);
-    // TODO
+    //post request w/ term
+    fetch("localhost:1128/repos", {
+      method: "POST",
+      body: JSON.stringify({
+        term: term
+      })
+    })
+    //  .then (res => this.updateRepos())
+      .then((res) => {
+        this.updateRepos()
+      })
+      .catch((err) => {
+        console.log('error: ', err)
+      })
   }
+
 
   render () {
     return (<div>
