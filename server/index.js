@@ -2,29 +2,36 @@ const express = require('express');
 const Promise = require('bluebird')
 const Cors = require('cors');
 const bodyParser = require('body-parser');
+let getReposByUsername = require('../helpers/github.js')
 
 let app = express();
 
 app.use(Cors());
 app.use(express.static(__dirname + '/../client/dist'));
-//content type: application json
 app.use(bodyParser.json());
 
 Promise.promisifyAll(require("mongoose"));
 
+//a test array of repos to make sure the connection to client is working
+var repos = ['a repo', 'another repo', 'a third repo']
+
+
 app.post('/repos', function (req, res) {
   // TODO - your code here!
-  console.log(req.body)
+  getReposByUsername(req.body.term)
   // This route should take the github username provided
   // and get the repo information from the github API, then
   // save the repo information in the database
-  res.send('good job')
+
+
+  //testing with the test array
+  repos.push(req.body.term)
+  res.send(200)
 });
 
 app.get('/repos', function (req, res) {
   // TODO - your code here!
-  console.log('I got a thing! ', req.body)
-  var repos = ['a repo', 'another repo', 'a third repo']
+
   // This route should send back the top 25 repos
   res.send(repos)
 });

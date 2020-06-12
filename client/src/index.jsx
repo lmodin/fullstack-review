@@ -22,11 +22,9 @@ class App extends React.Component {
     fetch("http://localhost:1128/repos")
     .then(res => res.json())
     .then((repos) => {
-      console.log(repos)
       this.setState({
         repos: repos
       });
-      console.log(this.state.repos)
     })
     .catch(err => console.log(err))
 
@@ -35,13 +33,16 @@ class App extends React.Component {
   search (term) {
     console.log(`${term} was searched`);
     //post request w/ term
-    fetch("localhost:1128/repos", {
+    fetch("http://localhost:1128/repos", {
       method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
-        term: term
+        "term": term
       })
     })
-    //  .then (res => this.updateRepos())
+    // update the page
       .then((res) => {
         this.updateRepos()
       })
