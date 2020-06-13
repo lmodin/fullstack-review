@@ -1,8 +1,9 @@
 const express = require('express');
-const Promise = require('bluebird')
+const Promise = require('bluebird');
 const Cors = require('cors');
 const bodyParser = require('body-parser');
-let getReposByUsername = require('../helpers/github.js')
+let getRepo = require('../helpers/github.js');
+let db = require('../database/index.js');
 
 let app = express();
 
@@ -17,23 +18,21 @@ var repos = ['a repo', 'another repo', 'a third repo']
 
 
 app.post('/repos', function (req, res) {
-  // TODO - your code here!
-  getReposByUsername(req.body.term)
-  // This route should take the github username provided
-  // and get the repo information from the github API, then
-  // save the repo information in the database
+  getRepo.getReposByUsername(req.body.term)
+    .then(res => {
+      //send the response over to the save function in database
+      db.save(res.data);
+    })
+    .catch((err) => {console.log('post request didnt work')})
 
-
-  //testing with the test array
-  repos.push(req.body.term)
-  res.send(200)
+  res.sendStatus(200)
 });
 
 app.get('/repos', function (req, res) {
-  // TODO - your code here!
-
   // This route should send back the top 25 repos
-  res.send(repos)
+
+
+  res.send(/*something*/)
 });
 
 let port = 1128;
