@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/fetcher');
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/fetcher', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 const Promise = require('bluebird');
 
 Promise.promisifyAll(mongoose);
