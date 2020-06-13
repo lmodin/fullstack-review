@@ -25,6 +25,7 @@ class App extends React.Component {
       this.setState({
         repos: repos
       });
+      console.log(this.state.repos)
     })
     .catch(err => console.log(err))
 

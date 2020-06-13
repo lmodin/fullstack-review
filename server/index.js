@@ -29,11 +29,17 @@ app.post('/repos', function (req, res) {
 });
 
 app.get('/repos', function (req, res) {
-  // This route should send back the top 25 repos
+  //This route should send back the top 25 repos
+  db.top25()
+    .then((repos) => {res.send(repos)});
 
-
-  res.send(/*something*/)
 });
+
+app.delete('/repos', function(req, res) {
+  db.clear()
+
+  res.send('cleared')
+})
 
 let port = 1128;
 

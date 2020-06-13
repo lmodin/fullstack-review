@@ -2,21 +2,19 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/fetcher');
 const Promise = require('bluebird');
 
-Promise.promisifyAll(require("mongoose"));
+Promise.promisifyAll(mongoose);
 
 let repoSchema = mongoose.Schema({
   username: String,
-  repo_name: String,
+  repo_name: {type: String, unique: true},
   url: String,
-  stars: Number //stargazer_count
+  stars: Number
 });
 
 let Repo = mongoose.model('Repo', repoSchema);
 
 let save = (repos) => {
-  // TODO: Your code here
-  // This function should save a repo or repos to
-  //iterate through the reposs
+  //iterate through the repos
   for (var i = 0; i < repos.length; i++) {
     //create an object for each one by abstracting name, repo, url, stargazer count
     var makeRepo = {
@@ -32,4 +30,19 @@ let save = (repos) => {
 
 }
 
+var top25 = function() {
+  //create a way to get the repos, and order by stars. return the top 25
+  var query = Repo.find();
+  query.sort({stars: 'desc'});
+  //query.limit(25);
+
+  return query;
+}
+
+var clear = function() {
+  Repo.collection.drop();
+}
+
 module.exports.save = save;
+module.exports.top25 = top25;
+module.exports.clear = clear;
