@@ -19,13 +19,13 @@ var repos = ['a repo', 'another repo', 'a third repo']
 
 app.post('/repos', function (req, res) {
   getRepo.getReposByUsername(req.body.term)
-    .then(res => {
+    .then(data => {
       //send the response over to the save function in database
-      db.save(res.data);
+      db.save(data.data);
+      res.end()
     })
     .catch((err) => {console.log('post request didnt work')})
 
-  res.sendStatus(200)
 });
 
 app.get('/repos', function (req, res) {

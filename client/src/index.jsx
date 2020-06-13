@@ -20,12 +20,13 @@ class App extends React.Component {
 
   updateRepos() {
     fetch("http://localhost:1128/repos")
-    .then(res => res.json())
+    .then(res => (res.json()))
     .then((repos) => {
+      console.log('Im trying to set the state: ', repos)
       this.setState({
         repos: repos
-      });
-      console.log(this.state.repos)
+      }, () => (console.log('updated state: ', this.state.repos)));
+      //console.log(this.state.repos)
     })
     .catch(err => console.log(err))
 
@@ -43,7 +44,6 @@ class App extends React.Component {
         "term": term
       })
     })
-    // update the page
       .then((res) => {
         this.updateRepos()
       })

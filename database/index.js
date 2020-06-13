@@ -25,7 +25,7 @@ let save = (repos) => {
     }
     //make a new Repo
     var newRepo = new Repo(makeRepo);
-    newRepo.save((err) => { console.log('received error making document: ', err) })
+    newRepo.save((err) => { if (err) {console.log('received error making document: ')} })
   }
 
 }
@@ -34,7 +34,7 @@ var top25 = function() {
   //create a way to get the repos, and order by stars. return the top 25
   var query = Repo.find();
   query.sort({stars: 'desc'});
-  //query.limit(25);
+  query.limit(25);
 
   return query;
 }
