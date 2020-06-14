@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "react-dev": "webpack -d --watch",
-    "server-dev": "nodemon server/index.js",
+    "start": "nodemon server/index.js",
     "build": "cd client && npm run build",
     "install-client": "cd client && npm install",
     "heroku-postbuild": "npm run install-client && npm run build"
@@ -29,5 +29,8 @@
     "mongoose": "^4.13.20",
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
+  },
+  "engines": {
+    "node": "14.2.0"
   }
 }

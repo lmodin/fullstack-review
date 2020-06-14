@@ -19,7 +19,7 @@ class App extends React.Component {
   }
 
   updateRepos() {
-    fetch("http://localhost:1128/repos")
+    fetch("/repos")
     .then(res => (res.json()))
     .then((repos) => {
       console.log('Im trying to set the state: ', repos)
@@ -35,7 +35,7 @@ class App extends React.Component {
   search (term) {
     console.log(`${term} was searched`);
     //post request w/ term
-    fetch("http://localhost:1128/repos", {
+    fetch("/repos", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'

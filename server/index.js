@@ -11,11 +11,9 @@ app.use(Cors());
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.json());
 
-Promise.promisifyAll(require("mongoose"));
-
-//a test array of repos to make sure the connection to client is working
-var repos = ['a repo', 'another repo', 'a third repo']
-
+// if (process.env.NODE_ENV === 'production') {
+//   app.use(express.static(__dirname + '/../client/dist'));
+// }
 
 app.post('/repos', function (req, res) {
   getRepo.getReposByUsername(req.body.term)
@@ -40,8 +38,8 @@ app.delete('/repos', function(req, res) {
 
   res.send('cleared')
 })
-
-let port = 1128;
+//console.log(process.env)
+let port = process.env.PORT || 1128;
 
 app.listen(port, function() {
   console.log(`listening on port ${port}`);
